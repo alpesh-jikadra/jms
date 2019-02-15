@@ -6,12 +6,7 @@
    http://www.springframework.org/schema/context 
    http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<bean id="mappedProperties"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-         <property name="location">
-             <value>file:\\\${jboss.server.config.dir}/cpro.properties</value>
-         </property>
-	</bean>
+	
 
 	<bean id="handlerLookup" class="com.example.jms.controller.HandlerLookup" factory-method="getInstance"/>
 
@@ -22,8 +17,8 @@
 	            <constructor-arg value="org.hornetq.core.remoting.impl.netty.NettyConnectorFactory" />
 	            <constructor-arg>
 	                <map key-type="java.lang.String" value-type="java.lang.Object">
-	                    <entry key="host" value="${jmsHost}" />
-	                    <entry key="port" value="${jmsPort}" />
+	                    <entry key="host" value="127.0.0.1" />
+	                    <entry key="port" value="5445" />
 	                </map>
 	            </constructor-arg>
 	        </bean>
@@ -34,7 +29,7 @@
         <property name = "environment">
             <props>
                 <prop key = "java.naming.factory.initial">org.jboss.naming.remote.client.InitialContextFactory</prop>
-                <prop key = "java.naming.provider.url">${jmsServerUrls}</prop>
+                <prop key = "java.naming.provider.url">http-remoting://127.0.0.1:8080</prop>
             </props>
         </property>
     </bean> 
@@ -83,9 +78,7 @@
     
     
     <bean id = "atfQueueMDP" class = "org.springframework.jms.listener.DefaultMessageListenerContainer" >
-        <property name = "concurrentConsumers" value = "5"/>
-        <property name = "maxConcurrentConsumers" value = "${listenerMDP2ConsumerMax}"/>
-<!-- 		<property name="concurrency" value="5-${listenerMDP2ConsumerMax}"></property> -->
+        <property name = "concurrentConsumers" value = "20"/>
         <property name = "connectionFactory" ref = "connectionFactory"/>
         <property name = "destination" ref = "atfQueue"/>
         <property name = "messageListener" ref = "messageListener"/>
@@ -93,9 +86,7 @@
     </bean>
     
      <bean id = "bdQueueMDP" class = "org.springframework.jms.listener.DefaultMessageListenerContainer" >
-<!--         <property name = "concurrentConsumers" value = "20"/> -->
-<!--         <property name = "maxConcurrentConsumers" value = "${listenerMDP2ConsumerMax}"/> -->
-		<property name="concurrency" value="5-${listenerMDP2ConsumerMax}"></property>
+		<property name = "concurrentConsumers" value = "20"/>
         <property name = "connectionFactory" ref = "connectionFactory"/>
         <property name = "destination" ref = "bdQueue"/>
         <property name = "messageListener" ref = "messageListener"/>
@@ -113,8 +104,8 @@
 	            <constructor-arg value="org.hornetq.core.remoting.impl.netty.NettyConnectorFactory" />
 	            <constructor-arg>
 	                <map key-type="java.lang.String" value-type="java.lang.Object">
-	                    <entry key="host" value="${jmsHost}" />
-	                    <entry key="port" value="${jmsPort}" />
+	                    <entry key="host" value="127.0.0.1" />
+	                    <entry key="port" value="5445" />
 	                </map>
 	            </constructor-arg>
 	        </bean>
