@@ -15,7 +15,6 @@ import org.springframework.jms.core.JmsTemplate;
 
 import com.example.jms.controller.HandlerLookup;
 import com.example.jms.message.AtfMessage;
-import com.example.jms.message.JobInfo;
 
 @Path("/v1")
 public class Hello {
@@ -29,7 +28,6 @@ public class Hello {
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "OK");
 		result.put("count", count);
-		JobInfo jobInfo = new JobInfo();
 		boolean sendToBd = "true".equals(sendToBdQueue);
 		switch (queueName) {
 		case "atf":
